@@ -5,4 +5,13 @@ package com.sinaproject.data;
  */
 
 public class AccessToken {
+    private String access_token, uid;
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public String getUid() {
+        return uid;
+    }
 }

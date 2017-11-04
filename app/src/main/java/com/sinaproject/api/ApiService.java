@@ -2,10 +2,16 @@ package com.sinaproject.api;
 
 
 import com.sinaproject.data.AccessToken;
+import com.sinaproject.data.Constant;
+import com.sinaproject.data.UserInfo;
+
+import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by DeMon on 2017/11/4.
@@ -14,6 +20,11 @@ import retrofit2.http.Query;
 public interface ApiService {
 
     @POST("oauth2/access_token")
-    Observable<AccessToken> getToken(@Query("client_id") String client_id, @Query("client_secret") String client_secret,
-                                     @Query("grant_type") String grant_type, @Query("code") String code, @Query("redirect_uri") String redirect_uri);
+    Observable<AccessToken> getToken(@QueryMap Map<String, String> map);
+
+    @POST("oauth2/get_token_info")
+    Observable<String> getTokenInfo(@Query(Constant.ACCESS_TOKEN) String access_token);
+
+    @GET("users/show.json")
+    Observable<UserInfo> getUserInfo(@Query(Constant.ACCESS_TOKEN) String access_token, @Query(Constant.UID) String uid);
 }

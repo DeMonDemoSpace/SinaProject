@@ -19,6 +19,7 @@ public class DialogUtil {
         //dialog.setTitle("温馨提示");
         dialog.setMessage("加载中...");
         dialog.setCancelable(true);
+
         return dialog;
     }
 }

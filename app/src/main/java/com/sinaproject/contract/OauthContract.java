@@ -1,24 +1,29 @@
 package com.sinaproject.contract;
 
+import android.media.session.MediaSession;
+
 import com.mvprr.base.BasePresenter;
 import com.mvprr.base.BaseView;
+import com.sinaproject.data.AccessToken;
+
+import java.util.Map;
 
 /**
  * Created by DeMon on 2017/11/4.
  */
 
-public class OauthContract {
-    public interface View extends BaseView {
-        void result(String s);
+public interface OauthContract {
+    interface View extends BaseView {
+        void result(Object o);
     }
 
-    public abstract class Presenter extends BasePresenter<View> {
+    abstract class Presenter extends BasePresenter<View> {
         public Presenter(View view) {
             super(view);
         }
 
-        public abstract void getToken(String client_id, String client_secret, String grant_type, String code, String redirect_uri);
+        public abstract void getToken(Map<String, String> map);
 
-        ;
+        public abstract void get_token_info(String token);
     }
 }

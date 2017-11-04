@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_weibo"
+        android:icon="@mipmap/homepage"
+        android:title="@string/weibo" />
+
+    <item
+        android:id="@+id/nav_comment"
+        android:icon="@mipmap/comment"
+        android:title="@string/comment" />
+
+    <item
+        android:id="@+id/nav_write"
+        android:icon="@mipmap/write"
+        android:title="@string/send_weibo" />
+
+    <item
+        android:id="@+id/nav_mine"
+        android:icon="@mipmap/mine"
+        android:title="@string/mine" />
+
+</menu>
