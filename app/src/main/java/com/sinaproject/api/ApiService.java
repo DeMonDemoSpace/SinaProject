@@ -25,6 +25,12 @@ public interface ApiService {
     @POST("oauth2/get_token_info")
     Observable<String> getTokenInfo(@Query(Constant.ACCESS_TOKEN) String access_token);
 
-    @GET("users/show.json")
+    @GET("2/users/show.json")
     Observable<UserInfo> getUserInfo(@Query(Constant.ACCESS_TOKEN) String access_token, @Query(Constant.UID) String uid);
+
+    @POST("oauth2/revokeoauth2")
+    Observable<String> revokeToken(@Query(Constant.ACCESS_TOKEN) String access_token);
+
+    @GET("2/statuses/home_timeline.json")
+    Observable<String> getWeibo(@QueryMap Map<String, Object> map);
 }

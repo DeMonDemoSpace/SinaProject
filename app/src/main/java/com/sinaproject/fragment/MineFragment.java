@@ -1,8 +1,10 @@
 package com.sinaproject.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +12,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.sinaproject.R;
+import com.sinaproject.activity.StartActivity;
 import com.sinaproject.contract.MineContract;
 import com.sinaproject.contract.Presenter.MinePresenter;
 import com.sinaproject.data.SinaInfo;
 import com.sinaproject.data.UserInfo;
 import com.sinaproject.util.GlideUtil;
+import com.sinaproject.util.SPUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +57,8 @@ public class MineFragment extends Fragment implements MineContract.View {
     @BindView(R.id.toolbar)
     TextView toolbar;
     Unbinder unbinder;
-
+    private MinePresenter minePresenter;
+    private SinaInfo sinaInfo;
 
     public static MineFragment getInstance() {
         if (instance == null) {
@@ -71,8 +79,8 @@ public class MineFragment extends Fragment implements MineContract.View {
     }
 
     private void init() {
-        MinePresenter minePresenter = new MinePresenter(getActivity(), this);
-        SinaInfo sinaInfo = SinaInfo.getSinaInfo();
+        minePresenter = new MinePresenter(getActivity(), this);
+        sinaInfo = SinaInfo.getSinaInfo();
         minePresenter.getUserInfo(sinaInfo.getAccess_token(), sinaInfo.getUid());
     }
 
@@ -91,9 +99,11 @@ public class MineFragment extends Fragment implements MineContract.View {
                 break;
             case R.id.tv_fans:
                 break;
-            case R.id.btn_cancel:
+            case R.id.btn_cancel://注销帐号
+                minePresenter.revokeToken(sinaInfo.getAccess_token());
                 break;
             case R.id.btn_exit:
+                System.exit(0);
                 break;
         }
     }
@@ -106,5 +116,20 @@ public class MineFragment extends Fragment implements MineContract.View {
         tvWeibo.setText("微博:" + info.getStatuses_count());
         tvCare.setText("关注:" + info.getFriends_count());
         tvFans.setText("粉丝:" + info.getFollowers_count());
+    }
+
+    @Override
+    public void revoke(String s) {
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            String result = jsonObject.getString("result");
+            if (result.equals("true")) {
+                SPUtil.clear(getActivity());
+                startActivity(new Intent(getActivity(), StartActivity.class));
+                getActivity().finish();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -24,10 +24,20 @@ public class MinePresenter extends MineContract.Presenter {
 
     @Override
     public void getUserInfo(String token, String uid) {
-        model.Subscribe(context, Api.getApiService().getUserInfo(token, uid), new ObserverOnNextListener() {
+        model.Subscribe(context, Api.getApiService().getUserInfo(token, uid), new ObserverOnNextListener<UserInfo>() {
+            @Override
+            public void onNext(UserInfo info) {
+                view.result(info);
+            }
+        });
+    }
+
+    @Override
+    public void revokeToken(String token) {
+        model.Subscribe(context, Api.getApiService().revokeToken(token), new ObserverOnNextListener() {
             @Override
             public void onNext(Object o) {
-                view.result((UserInfo) o);
+                view.revoke((String) o);
             }
         });
     }

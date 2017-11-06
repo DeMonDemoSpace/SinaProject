@@ -16,7 +16,7 @@ public class MapUtil {
      *
      * @return
      */
-    public Map<String, Object> getMap() {
+    public static Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap<>();
         map.put(Constant.ACCESS_TOKEN, SinaInfo.getSinaInfo().getAccess_token());
         return map;

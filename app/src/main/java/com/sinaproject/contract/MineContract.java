@@ -13,9 +13,13 @@ import java.util.Map;
 public interface MineContract {
     interface View {
         void result(UserInfo info);
+
+        void revoke(String s);
     }
 
     abstract class Presenter {
         public abstract void getUserInfo(String token, String uid);
+
+        public abstract void revokeToken(String token);
     }
 }
