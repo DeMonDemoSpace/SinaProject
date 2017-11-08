@@ -8,11 +8,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -102,11 +104,12 @@ public class WeiboFragment extends Fragment implements WeiboContract.View {
                 ImageAdapter imageAdapter = new ImageAdapter(getActivity(), weiBo_status.getPic_urls());
                 rv_img.setAdapter(imageAdapter);
 
-                if (weiBo_status.getRetweeted_status() != null && position == holder.getAdapterPosition()) {
-                    ViewStub viewStub = holder.getView(R.id.viewStub);
-                    viewStub.setVisibility(View.VISIBLE);
+                if (weiBo_status.getRetweeted_status() != null && holder.getAdapterPosition() == position) {
+                    LinearLayout linearLayout = holder.getView(R.id.re_layout);
+                    linearLayout.setVisibility(View.VISIBLE);
                     WeiBo_Status retweeted_status = weiBo_status.getRetweeted_status();
                     WeiBo_Status.User retweeted_user = retweeted_status.getUser();
+                    Log.i(TAG, "convert: " + retweeted_status.getText());
                     holder.setText(R.id.tv_re_text, "@" + retweeted_user.getScreen_name() + "：" + retweeted_status.getText());
                     RecyclerView rv_re_img = holder.getView(R.id.rv_re_img);
                     StaggeredGridLayoutManager sgm1 = new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL);

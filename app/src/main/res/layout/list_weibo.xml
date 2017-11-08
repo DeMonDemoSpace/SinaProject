@@ -63,11 +63,28 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp" />
 
-        <ViewStub
-            android:id="@+id/viewStub"
+        <LinearLayout
+            android:id="@+id/re_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout="@layout/list_retweeted" />
+            android:layout_height="match_parent"
+            android:background="@color/gray_white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_re_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_re_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+        </LinearLayout>
 
         <View
             android:id="@+id/line"
