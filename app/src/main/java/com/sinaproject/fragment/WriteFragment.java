@@ -166,6 +166,12 @@ public class WriteFragment extends Fragment {
                 if (msg.what == 0x001) {
                     uriList.addAll(MainActivity.mSelected);
                     initImagePath();
+                } else if (msg.what == 0x002) {
+                    etStatus.setText("");
+                    imageList.clear();
+                    uriList.clear();
+                    imagePath = null;
+                    adapter.notifyDataSetChanged();
                 }
             }
 

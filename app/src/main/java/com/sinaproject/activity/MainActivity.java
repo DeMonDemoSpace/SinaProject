@@ -147,6 +147,7 @@ public class MainActivity extends FragmentActivity implements BottomNavigationVi
         bottomNavigation.setSelectedItemId(R.id.nav_weibo);
         viewPager.setCurrentItem(0);
         Toast.makeText(this, R.string.weibosdk_demo_toast_share_success, Toast.LENGTH_LONG).show();
+        WriteFragment.handler.sendEmptyMessage(0x002);
     }
 
     @Override
