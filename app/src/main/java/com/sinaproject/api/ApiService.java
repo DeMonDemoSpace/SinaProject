@@ -5,11 +5,15 @@ import com.sinaproject.data.AccessToken;
 import com.sinaproject.data.Constant;
 import com.sinaproject.data.UserInfo;
 
+import java.io.File;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -33,4 +37,14 @@ public interface ApiService {
 
     @GET("2/statuses/home_timeline.json")
     Observable<String> getWeibo(@QueryMap Map<String, Object> map);
+
+    @GET("2/comments/timeline.json")
+    Observable<String> getComment(@QueryMap Map<String, Object> map);
+
+    @Multipart
+    @POST("2/statuses/share.json")
+    Observable<String> postWriteImage(@QueryMap Map<String, Object> map, @PartMap() Map<String, RequestBody> fileMap);
+
+    @POST("2/statuses/share.json")
+    Observable<String> postWrite(@QueryMap Map<String, Object> map);
 }

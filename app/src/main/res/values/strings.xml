@@ -6,4 +6,14 @@
     <string name="comment">评论</string>
     <string name="send_weibo">发微博</string>
     <string name="mine">我</string>
+
+
+    <string name="negative">取消</string>
+    <string name="positive">确认</string>
+    <string name="gallery">相册</string>
+    <string name="camera">拍照</string>
+
+    <string name="weibosdk_demo_toast_share_success">分享成功</string>
+    <string name="weibosdk_demo_toast_share_failed">分享失败</string>
+    <string name="weibosdk_demo_toast_share_canceled">取消分享</string>
 </resources>

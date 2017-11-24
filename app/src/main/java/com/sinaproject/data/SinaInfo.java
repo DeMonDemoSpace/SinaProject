@@ -8,7 +8,7 @@ public class SinaInfo {
     /**
      * 当前 DEMO 应用的开发者ID
      */
-    public static final String CLIENT_ID = "2617018442";
+    public static final String APP_KEY = "2617018442";
     /**
      * 开发者网站的回调地址
      * 注：关于授权回调页对移动客户端应用来说对用户是不可见的，所以定义为何种形式都将不影响，
@@ -25,7 +25,7 @@ public class SinaInfo {
      * 授权页面引用地址，根据上面参数生成
      * https://api.weibo.com/oauth2/authorize?client_id=2887521880&redirect_uri=https://api.weibo.com/oauth2/default.html&response_type=code
      */
-    public static final String URL = "https://api.weibo.com/oauth2/authorize?client_id=" + CLIENT_ID + "&redirect_uri=" + REDIRECT_URL + "&scope=statuses_to_me_read&response_type=code";
+    public static final String URL = "https://api.weibo.com/oauth2/authorize?client_id=" + APP_KEY + "&redirect_uri=" + REDIRECT_URL + "&scope=statuses_to_me_read&response_type=code";
 
     /**
      * Scope 是 OAuth2.0 授权机制中 authorize 接口的一个参数。通过 Scope，平台将开放更多的微博

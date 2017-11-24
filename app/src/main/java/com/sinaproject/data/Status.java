@@ -1,20 +1,17 @@
 package com.sinaproject.data;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
- * Created by DeMon on 2017/11/6.
+ * Created by DeMon on 2017/11/24.
  */
 
-public class WeiBo_Status {
-    private List<Pic_urls> pic_urls;
+public class Status {
+    public List<Pic_urls> pic_urls;
     private String created_at, text, source;
     private long id;
     private int reposts_count, comments_count, attitudes_count;
     private UserInfo user;
-    private Status retweeted_status;
 
     public List<Pic_urls> getPic_urls() {
         return pic_urls;
@@ -50,9 +47,5 @@ public class WeiBo_Status {
 
     public UserInfo getUser() {
         return user;
-    }
-
-    public Status getRetweeted_status() {
-        return retweeted_status;
     }
 }

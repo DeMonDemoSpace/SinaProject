@@ -12,12 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sinaproject.R;
 import com.sinaproject.adapter.EndlessRecyclerOnScrollListener;
 import com.sinaproject.adapter.ImageAdapter;
@@ -25,7 +25,8 @@ import com.sinaproject.adapter.MyViewHolder;
 import com.sinaproject.adapter.TemplateAdapter;
 import com.sinaproject.contract.Presenter.WeiboPresenter;
 import com.sinaproject.contract.WeiboContract;
-import com.sinaproject.data.WeiBo;
+import com.sinaproject.data.Status;
+import com.sinaproject.data.UserInfo;
 import com.sinaproject.data.WeiBo_Status;
 import com.sinaproject.util.DateUtil;
 import com.sinaproject.util.GlideUtil;
@@ -61,6 +62,7 @@ public class WeiboFragment extends Fragment implements WeiboContract.View {
     private List<WeiBo_Status> statusesList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private int size;
+    private List<Integer> integerList = new ArrayList<>();
 
     public static WeiboFragment getInstance() {
         if (instance == null) {
@@ -90,10 +92,25 @@ public class WeiboFragment extends Fragment implements WeiboContract.View {
         weiboAapter = new TemplateAdapter<WeiBo_Status>(getActivity(), R.layout.list_weibo, statusesList) {
             @Override
             public void convert(MyViewHolder holder, int position, WeiBo_Status weiBo_status) {
+                LinearLayout linearLayout = holder.getView(R.id.re_layout);
+                if (weiBo_status.getRetweeted_status() != null) {
+                    linearLayout.setVisibility(View.VISIBLE);
+                    Status retweeted_status = weiBo_status.getRetweeted_status();
+                    UserInfo retweeted_user = retweeted_status.getUser();
+                    holder.setText(R.id.tv_re_text, "@" + retweeted_user.getScreen_name() + "：" + retweeted_status.getText());
+                    RecyclerView rv_re_img = holder.getView(R.id.rv_re_img);
+                    StaggeredGridLayoutManager sgm1 = new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL);
+                    rv_re_img.setLayoutManager(sgm1);
+                    ImageAdapter adapter = new ImageAdapter(getActivity(), retweeted_status.getPic_urls());
+                    rv_re_img.setAdapter(adapter);
+                }else {
+                    linearLayout.setVisibility(View.GONE);
+                }
+
                 RecyclerView rv_img = holder.getView(R.id.rv_img);
                 StaggeredGridLayoutManager sgm = new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL);
                 rv_img.setLayoutManager(sgm);
-                WeiBo_Status.User user = weiBo_status.getUser();
+                UserInfo user = weiBo_status.getUser();
                 GlideUtil.setImage(getActivity(), user.getAvatar_hd(), (ImageView) holder.getView(R.id.img_icon));
                 holder.setText(R.id.tv_name, user.getScreen_name());
                 Date startDate = new Date(weiBo_status.getCreated_at());
@@ -103,20 +120,6 @@ public class WeiboFragment extends Fragment implements WeiboContract.View {
                 holder.setText(R.id.tv_text, weiBo_status.getText());
                 ImageAdapter imageAdapter = new ImageAdapter(getActivity(), weiBo_status.getPic_urls());
                 rv_img.setAdapter(imageAdapter);
-
-                if (weiBo_status.getRetweeted_status() != null && holder.getAdapterPosition() == position) {
-                    LinearLayout linearLayout = holder.getView(R.id.re_layout);
-                    linearLayout.setVisibility(View.VISIBLE);
-                    WeiBo_Status retweeted_status = weiBo_status.getRetweeted_status();
-                    WeiBo_Status.User retweeted_user = retweeted_status.getUser();
-                    Log.i(TAG, "convert: " + retweeted_status.getText());
-                    holder.setText(R.id.tv_re_text, "@" + retweeted_user.getScreen_name() + "：" + retweeted_status.getText());
-                    RecyclerView rv_re_img = holder.getView(R.id.rv_re_img);
-                    StaggeredGridLayoutManager sgm1 = new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL);
-                    rv_re_img.setLayoutManager(sgm1);
-                    ImageAdapter adapter = new ImageAdapter(getActivity(), retweeted_status.getPic_urls());
-                    rv_re_img.setAdapter(adapter);
-                }
 
                 holder.setText(R.id.tv_forward, "转发:" + weiBo_status.getReposts_count());
                 holder.setText(R.id.tv_comment, "评论:" + weiBo_status.getComments_count());
@@ -168,9 +171,18 @@ public class WeiboFragment extends Fragment implements WeiboContract.View {
 
     @Override
     public void result(String s) {
-        WeiBo weiBo = new Gson().fromJson(s, WeiBo.class);
-        statusesList.addAll(weiBo.getStatuses());
-        size = weiBo.getStatuses().size();
+        List<WeiBo_Status> list = new Gson().fromJson(s, new TypeToken<List<WeiBo_Status>>() {
+        }.getType());
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getRetweeted_status() == null) {
+                integerList.add(0);
+            } else {
+                integerList.add(1);
+            }
+        }
+        statusesList.addAll(list);
+        size = list.size();
         weiboAapter.notifyDataSetChanged();
     }
+
 }

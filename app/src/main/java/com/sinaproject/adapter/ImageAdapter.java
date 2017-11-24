@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.sinaproject.R;
+import com.sinaproject.data.Pic_urls;
 import com.sinaproject.data.WeiBo_Status;
 import com.sinaproject.util.GlideUtil;
 
@@ -19,10 +20,10 @@ import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private Context context;
-    private List<WeiBo_Status.Pic_urls> list;
+    private List<Pic_urls> list;
     private LayoutInflater mInflater;
 
-    public ImageAdapter(Context context, List<WeiBo_Status.Pic_urls> list) {
+    public ImageAdapter(Context context, List<Pic_urls> list) {
         this.context = context;
         this.list = list;
         this.mInflater = LayoutInflater.from(context);

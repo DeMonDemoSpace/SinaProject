@@ -66,7 +66,7 @@ public class OauthActivity extends BaseTopBarActivity<OauthPresenter> implements
                     String code = url.split("=")[1];
                     Log.i(TAG, "onPageStarted: " + code);
                     Map<String, String> map = new HashMap<>();
-                    map.put("client_id", SinaInfo.CLIENT_ID);
+                    map.put("client_id", SinaInfo.APP_KEY);
                     map.put("client_secret", SinaInfo.APP_SECRET);
                     map.put("grant_type", "authorization_code");
                     map.put("code", code);

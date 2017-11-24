@@ -49,7 +49,7 @@ public abstract class TemplateAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MyViewHolder) {
-            convert((MyViewHolder) holder, position, list.get(position));
+            convert((MyViewHolder) holder, position, list.get(holder.getAdapterPosition()));
         }
     }
 

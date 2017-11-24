@@ -6,25 +6,25 @@ import com.mvprr.base.BaseApi;
  * Created by DeMon on 2017/11/4.
  */
 
-public class Api {
+public class SimpleApi {
     private String baseUrl = "https://api.weibo.com/";
 
     private volatile static ApiService apiService;
 
     public static ApiService getApiService() {
         if (apiService == null) {
-            synchronized (Api.class) {
+            synchronized (SimpleApi.class) {
                 if (apiService == null) {
-                    new Api();
+                    new SimpleApi();
                 }
             }
         }
         return apiService;
     }
 
-    private Api() {
+    private SimpleApi() {
         BaseApi baseApi = new BaseApi();
-        apiService = baseApi.getRetrofit(baseUrl).create(ApiService.class);
+        apiService = baseApi.getSimpleRetrofit(baseUrl).create(ApiService.class);
     }
 
 }
