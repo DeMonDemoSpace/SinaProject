@@ -1,13 +1,21 @@
 package com.sinaproject.fragment;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +65,7 @@ import io.valuesfeng.picker.engine.GlideEngine;
 public class WriteFragment extends Fragment {
     private static final String TAG = "WriteFragment";
     private static final int REQUEST_CODE_CHOOSE = 123;
+    private static final int REQUESTCODE = 234;
     public static WriteFragment instance = null;
     @BindView(R.id.toolbar)
     TextView toolbar;
@@ -216,22 +225,27 @@ public class WriteFragment extends Fragment {
             case R.id.ib_exp:
                 break;
             case R.id.ib_image:
-                if (flag) {
-                    if (imageList.size() == 9) {
-                        Toast.makeText(getActivity(), "图片最多9张！", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Picker.from(getActivity())
-                            .count(9 - imageList.size())
-                            .enableCamera(true)
-                            .setEngine(new GlideEngine())
-                            .forResult(REQUEST_CODE_CHOOSE);
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUESTCODE);
+                    return;
                 } else {
-                    Picker.from(getActivity())
-                            .count(1)
-                            .enableCamera(true)
-                            .setEngine(new GlideEngine())
-                            .forResult(REQUEST_CODE_CHOOSE);
+                    if (flag) {
+                        if (imageList.size() == 9) {
+                            Toast.makeText(getActivity(), "图片最多9张！", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Picker.from(getActivity())
+                                .count(9 - imageList.size())
+                                .enableCamera(true)
+                                .setEngine(new GlideEngine())
+                                .forResult(REQUEST_CODE_CHOOSE);
+                    } else {
+                        Picker.from(getActivity())
+                                .count(1)
+                                .enableCamera(true)
+                                .setEngine(new GlideEngine())
+                                .forResult(REQUEST_CODE_CHOOSE);
+                    }
                 }
                 break;
         }
@@ -306,4 +320,5 @@ public class WriteFragment extends Fragment {
         multiImageObject.setImageList(pathList);
         return multiImageObject;
     }
+
 }
