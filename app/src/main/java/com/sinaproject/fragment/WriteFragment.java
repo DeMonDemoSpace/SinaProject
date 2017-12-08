@@ -40,9 +40,11 @@ import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.share.WbShareCallback;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sinaproject.R;
+import com.sinaproject.activity.ImageActivity;
 import com.sinaproject.activity.MainActivity;
 import com.sinaproject.adapter.MyViewHolder;
 import com.sinaproject.adapter.TemplateAdapter;
+import com.sinaproject.data.Constant;
 import com.sinaproject.util.DialogUtil;
 import com.sinaproject.util.DoDialogView;
 import com.sinaproject.util.GlideUtil;
@@ -320,5 +322,4 @@ public class WriteFragment extends Fragment {
         multiImageObject.setImageList(pathList);
         return multiImageObject;
     }
-
 }

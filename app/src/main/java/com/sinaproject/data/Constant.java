@@ -14,7 +14,8 @@ public class Constant {
     public static final String PIC = "pic";
     public static final String STATUS = "status";
     public static final String STATUSES ="statuses";
-
+    public static final String EXTRA_IMAGE_INDEX = "image_index";
+    public static final String EXTRA_IMAGE_URLS = "image_urls";
 
     public static String PICTURE_PATH;//相册图片的路径
     public static String PHOTO_PATH;//相册图片的路径

@@ -23,7 +23,7 @@ public class GlideUtil {
      * @param img     ImageView控件
      */
     public static void setImage(Context context, String url, ImageView img) {
-        Glide.with(context).load(url).dontAnimate().fitCenter().placeholder(R.mipmap.icon).into(img);
+        Glide.with(context).load(url).dontAnimate().fitCenter().placeholder(R.mipmap.loading).into(img);
 
     }
 
