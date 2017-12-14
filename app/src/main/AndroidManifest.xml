@@ -23,10 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.OauthActivity"></activity>
-        <activity
-            android:name="com.zfdang.multiple_images_selector.ImagesSelectorActivity"
-            android:configChanges="orientation|screenSize" />
+        <activity android:name=".activity.OauthActivity"/>
         <activity android:name=".activity.ImageActivity" />
     </application>
 
